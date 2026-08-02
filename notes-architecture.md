@@ -20,7 +20,7 @@ Ce fichier liste les points à améliorer sur ce projet avant l'ajout de nouvell
 | [ ] | [Tests unitaires non implémentés](#tests-non-implementes) | Qualité | Moyenne |
 | [ ] | [URL en dur plutôt qu'en variable d'environnement](#url-en-dur) | Placement | Haute |
 | [ ] | [Hiérarchie des titres incohérente](#uxui-titres) | UX/UI/A11y | Basse |
-| [ ] | [Header non partagé entre les pages](#uxui-header) | UX/UI/A11y | Haute |
+| [x] | [Header non partagé entre les pages](#uxui-header) | UX/UI/A11y | Haute |
 | [ ] | [Absence de responsive](#uxui-responsive) | UX/UI/A11y | Moyenne |
 | [ ] | [Navigation vers un pays au clavier impossible](#uxui-clavier) | UX/UI/A11y | Moyenne |
 | [ ] | [Divers problèmes d'accessibilité (contraste, sémantique)](#uxui-accessibilite) | UX/UI/A11y | Moyenne |
