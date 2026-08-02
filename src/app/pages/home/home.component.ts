@@ -1,13 +1,19 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
+import { CardComponent } from '@components/card/card.component';
+import { StatCardComponent } from '@components/stat-card/stat-card.component';
 import Chart from 'chart.js/auto';
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss'],
-    standalone: true,
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
+  standalone: true,
+  imports: [
+    CardComponent,
+    StatCardComponent,
+  ],
 })
 export class HomeComponent implements OnInit {
   private olympicUrl = './assets/mock/olympic.json';

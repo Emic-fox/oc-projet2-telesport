@@ -3,14 +3,20 @@ import {Component, OnInit} from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import Chart from 'chart.js/auto';
 import { BackLinkComponent } from '@components/back-link/back-link.component';
+import { CardComponent } from '@components/card/card.component';
+import { StatCardComponent } from '@components/stat-card/stat-card.component';
 
 
 @Component({
-    selector: 'app-country',
-    templateUrl: './country.component.html',
-    styleUrls: ['./country.component.scss'],
-    standalone: true,
-    imports: [BackLinkComponent]
+  selector: 'app-country',
+  templateUrl: './country.component.html',
+  styleUrls: ['./country.component.scss'],
+  standalone: true,
+  imports: [
+    BackLinkComponent,
+    CardComponent,
+    StatCardComponent
+  ]
 })
 export class CountryComponent implements OnInit {
   private olympicUrl = './assets/mock/olympic.json';

@@ -1,0 +1,12 @@
+article {
+  padding: 10px;
+  border: solid var(--color-primary) 1px;
+  border-radius: 10px;
+  color: var(--color-text-muted);
+
+  &.filled {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+  }
+}

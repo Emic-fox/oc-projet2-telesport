@@ -1,17 +1,13 @@
 <div>
   <div>
     <div class="center">
-      <div>{{ titlePage }}</div>
+      <app-card [filled]="true">
+        {{ titlePage }}
+      </app-card>
     </div>
     <div class="split">
-      <div>
-        <p>Number of countries</p>
-        <p>{{ totalCountries }}</p>
-      </div>
-      <div>
-        <p>Number of JOs</p>
-        <p>{{ totalJOs }}</p>
-      </div>
+      <app-stat-card [title]="'Number of countries'" [value]="totalCountries" />
+      <app-stat-card [title]="'Number of JOs'" [value]="totalJOs" />
     </div>
   </div>
   <canvas id="DashboardPieChart">{{ pieChart }}</canvas>

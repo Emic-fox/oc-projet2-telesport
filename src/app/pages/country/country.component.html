@@ -1,21 +1,14 @@
 <div>
   <div>
     <div class="center">
-      <div>{{ titlePage }}</div>
+      <app-card [filled]="true">
+        {{ titlePage }}
+      </app-card>
     </div>
     <div class="split">
-      <div>
-        <p>Number of entries</p>
-        <p>{{ totalEntries }}</p>
-      </div>
-      <div>
-        <p>Total Number of medals</p>
-        <p>{{ totalMedals }}</p>
-      </div>
-      <div>
-        <p>Total Number of athletes</p>
-        <p>{{ totalAthletes }}</p>
-      </div>
+      <app-stat-card [title]="'Number of entries'" [value]="totalEntries" />
+      <app-stat-card [title]="'Total Number of medals'" [value]="totalMedals" />
+      <app-stat-card [title]="'Total Number of athletes'" [value]="totalAthletes" />
     </div>
   </div>
   <div class="chart-container wrapper-container">
