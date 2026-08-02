@@ -4,26 +4,26 @@ Ce fichier liste les points à améliorer sur ce projet avant l'ajout de nouvell
 
 ## Résumé
 
-| Point | Catégorie | Priorité |
-|---|---|---|
-| [Version Angular obsolète](#version-angular) | Sécurité | Haute (mais hors périmètre du cours) |
-| [`NgModule`s à la place des composants standalone](#ngmodules-vs-standalone) | Structure | Moyenne |
-| [Injection par constructeur plutôt que `inject()`](#inject-function) | Structure | Basse |
-| [Classes CSS utilitaires trop responsables](#css-responsabilites) | Structure | Moyenne |
-| [Manque de composants atomiques](#composants-atomiques) | Duplication | Haute |
-| [Usage massif de `any`, absence de modèles](#typescript-any) | Typage | Haute |
-| [Absence de couche service](#absence-service) | Duplication | Haute |
-| [Mauvaise utilisation de RxJS](#mauvaise-utilisation-rxjs) | Qualité | Basse |
-| [`console.log` de débug oubliés](#console-log) | Sécurité | Haute |
-| [Aucune gestion réelle des erreurs](#gestion-erreurs) | Structure | Haute |
-| [Absence de linter](#absence-linter) | Qualité | Moyenne |
-| [Tests unitaires non implémentés](#tests-non-implementes) | Qualité | Moyenne |
-| [URL en dur plutôt qu'en variable d'environnement](#url-en-dur) | Placement | Haute |
-| [Hiérarchie des titres incohérente](#uxui-titres) | UX/UI/A11y | Basse |
-| [Header non partagé entre les pages](#uxui-header) | UX/UI/A11y | Haute |
-| [Absence de responsive](#uxui-responsive) | UX/UI/A11y | Moyenne |
-| [Navigation vers un pays au clavier impossible](#uxui-clavier) | UX/UI/A11y | Moyenne |
-| [Divers problèmes d'accessibilité (contraste, sémantique)](#uxui-accessibilite) | UX/UI/A11y | Moyenne |
+| ✅ | Point | Catégorie | Priorité |
+|---|---|---|---|
+| [ ] | [Version Angular obsolète](#version-angular) | Sécurité | Haute (mais hors périmètre du cours) |
+| [x] | [`NgModule`s à la place des composants standalone](#ngmodules-vs-standalone) | Structure | Moyenne |
+| [ ] | [Injection par constructeur plutôt que `inject()`](#inject-function) | Structure | Basse |
+| [ ] | [Classes CSS utilitaires trop responsables](#css-responsabilites) | Structure | Moyenne |
+| [ ] | [Manque de composants atomiques](#composants-atomiques) | Duplication | Haute |
+| [ ] | [Usage massif de `any`, absence de modèles](#typescript-any) | Typage | Haute |
+| [ ] | [Absence de couche service](#absence-service) | Duplication | Haute |
+| [ ] | [Mauvaise utilisation de RxJS](#mauvaise-utilisation-rxjs) | Qualité | Basse |
+| [ ] | [`console.log` de débug oubliés](#console-log) | Sécurité | Haute |
+| [ ] | [Aucune gestion réelle des erreurs](#gestion-erreurs) | Structure | Haute |
+| [ ] | [Absence de linter](#absence-linter) | Qualité | Moyenne |
+| [ ] | [Tests unitaires non implémentés](#tests-non-implementes) | Qualité | Moyenne |
+| [ ] | [URL en dur plutôt qu'en variable d'environnement](#url-en-dur) | Placement | Haute |
+| [ ] | [Hiérarchie des titres incohérente](#uxui-titres) | UX/UI/A11y | Basse |
+| [ ] | [Header non partagé entre les pages](#uxui-header) | UX/UI/A11y | Haute |
+| [ ] | [Absence de responsive](#uxui-responsive) | UX/UI/A11y | Moyenne |
+| [ ] | [Navigation vers un pays au clavier impossible](#uxui-clavier) | UX/UI/A11y | Moyenne |
+| [ ] | [Divers problèmes d'accessibilité (contraste, sémantique)](#uxui-accessibilite) | UX/UI/A11y | Moyenne |
 
 ## Détail des problèmes
 
