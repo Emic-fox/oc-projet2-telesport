@@ -10,7 +10,7 @@ Ce fichier liste les points à améliorer sur ce projet avant l'ajout de nouvell
 | [x] | [`NgModule`s à la place des composants standalone](#ngmodules-vs-standalone) | Structure | Moyenne |
 | [ ] | [Injection par constructeur plutôt que `inject()`](#inject-function) | Structure | Basse |
 | [ ] | [Classes CSS utilitaires trop responsables](#css-responsabilites) | Structure | Moyenne |
-| [ ] | [Manque de composants atomiques](#composants-atomiques) | Duplication | Haute |
+| [x] | [Manque de composants atomiques](#composants-atomiques) | Duplication | Haute |
 | [ ] | [Usage massif de `any`, absence de modèles](#typescript-any) | Typage | Haute |
 | [ ] | [Absence de couche service](#absence-service) | Duplication | Haute |
 | [ ] | [Mauvaise utilisation de RxJS](#mauvaise-utilisation-rxjs) | Qualité | Basse |

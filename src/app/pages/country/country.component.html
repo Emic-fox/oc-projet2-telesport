@@ -6,7 +6,13 @@
   </ng-container>
   <div class="chart-container wrapper-container">
     <div class="container">
-      <canvas id="countryChart">{{ lineChart }}</canvas>
+      <app-chart
+        [type]="'line'"
+        [labels]="years"
+        [data]="medals"
+        [datasetLabel]="'medals'"
+        [backgroundColor]="'var(--color-primary)'"
+      />
       <h2>Date</h2>
     </div>
   </div>
