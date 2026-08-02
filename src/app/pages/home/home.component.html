@@ -1,14 +1,7 @@
-<div>
-  <div>
-    <div class="center">
-      <app-card [filled]="true">
-        {{ titlePage }}
-      </app-card>
-    </div>
-    <div class="split">
-      <app-stat-card [title]="'Number of countries'" [value]="totalCountries" />
-      <app-stat-card [title]="'Number of JOs'" [value]="totalJOs" />
-    </div>
-  </div>
+<app-dashboard-layout [titlePage]="titlePage">
+  <ng-container stat-cards>
+    <app-stat-card [title]="'Number of countries'" [value]="totalCountries" />
+    <app-stat-card [title]="'Number of JOs'" [value]="totalJOs" />
+  </ng-container>
   <canvas id="DashboardPieChart">{{ pieChart }}</canvas>
-</div>
+</app-dashboard-layout>

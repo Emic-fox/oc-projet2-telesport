@@ -1,0 +1,13 @@
+<div>
+  <div>
+    <div class="d-flex justify-center m-1">
+      <app-card [filled]="true">
+        {{ titlePage }}
+      </app-card>
+    </div>
+    <div class="d-flex justify-center gap-4 m-1">
+      <ng-content select="[stat-cards]" />
+    </div>
+  </div>
+  <ng-content />
+</div>

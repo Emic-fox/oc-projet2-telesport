@@ -3,8 +3,8 @@ import {Component, OnInit} from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import Chart from 'chart.js/auto';
 import { BackLinkComponent } from '@components/back-link/back-link.component';
-import { CardComponent } from '@components/card/card.component';
 import { StatCardComponent } from '@components/stat-card/stat-card.component';
+import { DashboardLayoutComponent } from '@components/dashboard-layout/dashboard-layout.component';
 
 
 @Component({
@@ -14,8 +14,8 @@ import { StatCardComponent } from '@components/stat-card/stat-card.component';
   standalone: true,
   imports: [
     BackLinkComponent,
-    CardComponent,
-    StatCardComponent
+    StatCardComponent,
+    DashboardLayoutComponent
   ]
 })
 export class CountryComponent implements OnInit {

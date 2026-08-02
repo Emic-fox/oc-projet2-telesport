@@ -1,8 +1,8 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
-import { CardComponent } from '@components/card/card.component';
 import { StatCardComponent } from '@components/stat-card/stat-card.component';
+import { DashboardLayoutComponent } from '@components/dashboard-layout/dashboard-layout.component';
 import Chart from 'chart.js/auto';
 
 @Component({
@@ -11,8 +11,8 @@ import Chart from 'chart.js/auto';
   styleUrls: ['./home.component.scss'],
   standalone: true,
   imports: [
-    CardComponent,
     StatCardComponent,
+    DashboardLayoutComponent,
   ],
 })
 export class HomeComponent implements OnInit {
