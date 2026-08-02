@@ -406,3 +406,95 @@ Dans `home.component.ts`, la navigation vers la page d'un pays ne peut se décle
 Le Lighthouse remonte également les problèmes suivants :
 - Contraste ratio insuffisant sur la card de "titre" ("Medals per Country") et sur le titre des cards de stats ("Number of countries")
 - Absence de structure sémantique HTML (header, main, nav, ...)
+
+## Nouvelle architecture proposée
+
+Cette section décrit l'organisation cible du dossier `src/app/`, qui servira de base à toutes les prochaines implémentations.
+
+### Blocs logiques identifiés
+
+En regardant `HomeComponent` et `CountryComponent`, quatre types de responsabilités bien distinctes se dégagent, actuellement toutes mélangées dans les composants de page :
+
+1. **Récupération/mise en forme des données** (appel HTTP, calculs de totaux, recherche d'un pays) → couche **service**.
+2. **Forme des données manipulées** (un JO, un pays, une participation) → couche **modèle**.
+3. **Éléments visuels génériques, réutilisables sans logique métier propre** (card, bloc chiffre-clé, graphique, lien retour, header) → couche **composant**.
+4. **Écrans complets, associés à une route**, qui assemblent des composants et consomment un service → couche **page**.
+
+### Arborescence cible
+
+```
+src/app/
+  ├── components/
+  │     ├── header/
+  │     ├── card/
+  │     ├── stat-card/
+  │     ├── chart/
+  │     └── back-link/
+  ├── pages/
+  │     ├── home/
+  │     ├── country/
+  │     └── not-found/
+  ├── services/
+  │     └── data.service.ts
+  ├── models/
+  │     ├── olympic.model.ts
+  │     └── participation.model.ts
+  ├── app.component.ts (+ .html/.scss)
+  ├── app.routes.ts
+  └── app.config.ts
+```
+
+`pages/` existe déjà dans le projet ; `components/`, `services/` et `models/` restent à créer.  
+`app.module.ts`/`app-routing.module.ts` deviennent `app.config.ts`/`app.routes.ts` dans la foulée du passage au standalone.
+
+### Flux de dépendances
+
+Le schéma ci-dessous montre comment les couches communiquent entre elles : les pages consomment le service (Singleton) et assemblent des composants "dumb", le service est le seul point d'accès aux données et s'appuie sur les modèles typés.
+
+```mermaid
+graph TD
+    Pages[pages/<br/>home, country, not-found]
+    Components[components/<br/>header, card, stat-card, chart, back-link]
+    Service[services/data.service.ts<br/>Singleton]
+    Models[models/<br/>olympic, participation]
+    Source[(olympic.json<br/>→ future API REST)]
+
+    Pages --> Components
+    Pages -->|inject| Service
+    Service -->|typed by| Models
+    Service -->|HttpClient.get| Source
+```
+
+### Déplacements prévus
+
+| Fichier / logique actuelle | Nouvelle localisation |
+|---|---|
+| `home.component.*` | `pages/home/` (inchangé, déjà bien placé) |
+| `country.component.*` | `pages/country/` (inchangé, déjà bien placé) |
+| `not-found.component.*` | `pages/not-found/` (inchangé, déjà bien placé) |
+| Titre "Olympic games app" codé en dur dans `home.component.html` | `components/header/` |
+| Pattern visuel "carte" dupliqué dans `.center`/`.split` (styles.scss) | `components/card/` |
+| Bloc "label + valeur" dupliqué (`home`/`country`) | `components/stat-card/` |
+| `buildPieChart` (`home.component.ts`) + `buildChart` (`country.component.ts`) | `components/chart/` |
+| Lien "Go back" (actuellement absent/à ajouter) | `components/back-link/` |
+| Appels `http.get('./assets/mock/olympic.json')` dupliqués dans `home`/`country` | `services/data.service.ts` |
+| Données `any` de `olympic.json` | `models/olympic.model.ts`, `models/participation.model.ts` |
+
+### Design patterns retenus
+
+- **Singleton (service)** : `DataService` est fourni en `providedIn: 'root'`, donc instancié une seule fois pour toute l'application. Les données sont chargées une fois et partagées entre `HomeComponent` et `CountryComponent`, au lieu d'un appel HTTP dupliqué par page.
+- **Adapter (service, models)** : `DataService` adapte la réponse brute vers le format interne attendu (`Olympic[]`/`Participation[]` typés, valeurs calculées comme les totaux). 
+- **Decorator** : le passage vers les composants standalone fait porter à chaque `@Component` ses propres métadonnées (`selector`, `imports`), au lieu d'un `NgModule` central qui les déclarait toutes. L'utilisation de composants dumb avec des propriétés utilise également le decorator `@Inject`.
+- **Observer** : `DataService` expose ses données via un `Observable`.
+- **State** : représenter explicitement l'état de chaque page (`loading` / `success` / `error`), plutôt qu'une propriété `error` assignée mais jamais lue, pour afficher le bon visuel selon la situation.
+
+### Bénéfices attendus
+
+- **Clarté** : chaque fichier a un unique dossier logique où le chercher (visuel générique dans `components/`, écran dans `pages/`, accès aux données dans `services/`, forme des données dans `models/`).
+- **Réduction de la duplication** : les composants atomiques de `components/` mutualisent le HTML/SCSS/TS aujourd'hui dupliqué entre `home` et `country` ; idem pour `DataService`.
+- **Évolutivité** : ajouter une nouvelle page (ex. répartition des médailles par discipline) consiste à créer un dossier dans `pages/`, réutiliser les composants existants de `components/`, et étendre `DataService` si besoin, sans rien dupliquer.
+- **Testabilité** : les composants "dumb" de `components/` se testent avec de simples `@Input()`, sans mock HTTP ; toute la logique de récupération/traitement des données se concentre dans `DataService`, qui peut être testé (ou mocké) une seule fois pour couvrir `home` et `country`.
+
+### Préparation à l'arrivée d'un vrai backend
+
+Toute la couche `services/` est conçue comme le seul point de contact avec la source de données, mockée aujourd'hui via `./assets/mock/olympic.json` (déplacé en constante dans `environment.ts`). Le jour où cette source devient une API REST réelle, seul `DataService` change (l'URL pointe vers l'API, la méthode `HttpClient.get()` reste la même) : ni les modèles, ni les pages, ni les composants n'ont besoin d'être modifiés.
