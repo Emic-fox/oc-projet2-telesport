@@ -1,29 +1,35 @@
-# OlympicGamesStarter
+# Telesport - Olympic Games Dashboard
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.6.
+## Présentation fonctionnelle
 
-Don't forget to install your node_modules before starting (`npm install`).
+Telesport est un tableau de bord permettant de visualiser les résultats des différents pays aux Jeux Olympiques. L'application affiche :
 
-## Development server
+- une page d'accueil listant les pays participants avec, pour chacun, le nombre total de médailles et un graphique global de répartition des médailles par pays ;
+- une page détail par pays présentant l'évolution du nombre de médailles obtenues au fil des éditions des JO, ainsi que des statistiques clés (nombre de participations, d'athlètes, de médailles).
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Les données sont chargées depuis un fichier JSON local et gérées de manière centralisée via un service dédié, avec une gestion des erreurs (données manquantes, pays introuvable, etc.).
 
-## Build
+## Présentation technique
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **Framework** : Angular 18
+- **Graphiques** : Chart.js
 
-## Where to start
+### Commandes utiles
 
-As you can see, an architecture has already been defined for the project. It is just a suggestion, you can choose to use your own. The predefined architecture includes (in addition to the default angular architecture) the following:
+```bash
+npm install          # Installation des dépendances
+npm start            # Lancer le serveur de dev (http://localhost:4200)
+npm run build         # Build de production
+npm test              # Lancer les tests unitaires (Karma/Jasmine)
+npm run lint          # Linter le code (ESLint)
+npm run type-check    # Vérification des types sans compilation
+```
 
-- `components` folder: contains every reusable components
-- `pages` folder: contains components used for routing
-- `core` folder: contains the business logic (`services` and `models` folders)
+### Architecture (aperçu rapide)
 
-I suggest you to start by understanding this starter code. Pay an extra attention to the `app-routing.module.ts` and the `olympic.service.ts`.
+- `components/` : composants réutilisables (header, cards, charts, layout, messages d'erreur...)
+- `pages/` : composants de routing (home, country, not-found)
+- `services/` : logique métier, dont `data.service.ts` qui centralise l'accès aux données
+- `models/` : interfaces TypeScript (`Olympic`, `Participation`, `Errors`)
 
-Once mastered, you should continue by creating the typescript interfaces inside the `models` folder. As you can see I already created two files corresponding to the data included inside the `olympic.json`. With your interfaces, improve the code by replacing every `any` by the corresponding interface.
-
-You're now ready to implement the requested features.
-
-Good luck!
+Voir le fichier `ARCHITECTURE.md`, qui détaille plus en profondeur les choix techniques et la structure du projet.
