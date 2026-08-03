@@ -12,13 +12,13 @@ Ce fichier liste les points à améliorer sur ce projet avant l'ajout de nouvell
 | [x] | [Classes CSS utilitaires trop responsables](#css-responsabilites) | Structure | Moyenne |
 | [x] | [Manque de composants atomiques](#composants-atomiques) | Duplication | Haute |
 | [x] | [Usage massif de `any`, absence de modèles](#typescript-any) | Typage | Haute |
-| [ ] | [Absence de couche service](#absence-service) | Duplication | Haute |
-| [ ] | [Mauvaise utilisation de RxJS](#mauvaise-utilisation-rxjs) | Qualité | Basse |
+| [x] | [Absence de couche service](#absence-service) | Duplication | Haute |
+| [x] | [Mauvaise utilisation de RxJS](#mauvaise-utilisation-rxjs) | Qualité | Basse |
 | [x] | [`console.log` de débug oubliés](#console-log) | Sécurité | Haute |
 | [ ] | [Aucune gestion réelle des erreurs](#gestion-erreurs) | Structure | Haute |
 | [x] | [Absence de linter](#absence-linter) | Qualité | Moyenne |
-| [ ] | [Tests unitaires non implémentés](#tests-non-implementes) | Qualité | Moyenne |
-| [ ] | [URL en dur plutôt qu'en variable d'environnement](#url-en-dur) | Placement | Haute |
+| [] | [Tests unitaires non implémentés](#tests-non-implementes) | Qualité | Moyenne |
+| [x] | [URL en dur plutôt qu'en variable d'environnement](#url-en-dur) | Placement | Haute |
 | [x] | [Hiérarchie des titres incohérente](#uxui-titres) | UX/UI/A11y | Basse |
 | [x] | [Header non partagé entre les pages](#uxui-header) | UX/UI/A11y | Haute |
 | [ ] | [Absence de responsive](#uxui-responsive) | UX/UI/A11y | Moyenne |

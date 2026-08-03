@@ -1,10 +1,11 @@
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { StatCardComponent } from '@components/stat-card/stat-card.component';
 import { DashboardLayoutComponent } from '@components/dashboard-layout/dashboard-layout.component';
 import { ChartComponent, ChartPointClickEvent } from '@components/chart/chart.component';
-import { Olympic } from '@models/Olympic';
+import { DataService } from '@services/data.service';
+import { OlympicDataError } from '@app/models/Errors';
 
 @Component({
   selector: 'app-home',
@@ -19,9 +20,9 @@ import { Olympic } from '@models/Olympic';
 })
 export class HomeComponent implements OnInit {
   private router = inject(Router);
-  private http = inject(HttpClient);
+  private dataService = inject(DataService);
+  private destroyRef = inject(DestroyRef);
 
-  private olympicUrl = './assets/mock/olympic.json';
   public countries: string[] = [];
   public medalsPerCountry: number[] = [];
   public totalCountries = 0
@@ -30,20 +31,21 @@ export class HomeComponent implements OnInit {
   public titlePage = "Medals per Country";
 
   ngOnInit() {
-    this.http.get<Olympic[]>(this.olympicUrl).pipe().subscribe(
-      (data) => {
-        if (data && data.length > 0) {
+    this.dataService
+      .getOlympics()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (data) => {
           this.totalJOs = Array.from(new Set(data.map((o) => o.participations.map(f => f.year)).flat())).length;
           this.countries = data.map(o => o.country);
           this.totalCountries = this.countries.length;
           const medals = data.map(o => o.participations.map(p => p.medalsCount));
           this.medalsPerCountry = medals.map(i => i.reduce((acc, j) => acc + j, 0));
-        }
-      },
-      (error:HttpErrorResponse) => {
-        this.error = error.message
-      }
-    )
+        },
+        error: (error: OlympicDataError) => {
+          this.error = error.message;
+        },
+      });
   }
 
   onChartPointClick(event: ChartPointClickEvent) {
