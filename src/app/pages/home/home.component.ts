@@ -1,5 +1,5 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { StatCardComponent } from '@components/stat-card/stat-card.component';
 import { DashboardLayoutComponent } from '@components/dashboard-layout/dashboard-layout.component';
@@ -18,15 +18,16 @@ import { Olympic } from '@models/Olympic';
   ],
 })
 export class HomeComponent implements OnInit {
+  private router = inject(Router);
+  private http = inject(HttpClient);
+
   private olympicUrl = './assets/mock/olympic.json';
   public countries: string[] = [];
   public medalsPerCountry: number[] = [];
-  public totalCountries: number = 0
-  public totalJOs: number = 0
+  public totalCountries = 0
+  public totalJOs = 0
   public error!:string
-  titlePage: string = "Medals per Country";
-
-  constructor(private router: Router, private http:HttpClient) { }
+  public titlePage = "Medals per Country";
 
   ngOnInit() {
     this.http.get<Olympic[]>(this.olympicUrl).pipe().subscribe(

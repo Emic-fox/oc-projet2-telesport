@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, Output, ViewChild } from '@angular/core';
 import Chart from 'chart.js/auto';
 
 export interface ChartPointClickEvent {
@@ -19,9 +19,9 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() type: 'pie' | 'line' = 'line';
   @Input() labels: DataLabel[] = [];
   @Input() data: DataValue[] = [];
-  @Input() datasetLabel: string = '';
+  @Input() datasetLabel = '';
   @Input() backgroundColor: string | string[] = 'var(--color-primary)';
-  @Input() aspectRatio: number = 2.5;
+  @Input() aspectRatio = 2.5;
   @Output() pointClick = new EventEmitter<ChartPointClickEvent>();
 
   @ViewChild('canvas', { static: true })
@@ -29,7 +29,7 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   private chart?: Chart<'pie' | 'line', DataValue[], DataLabel>;
 
-  ngOnChanges(_changes: SimpleChanges): void {
+  ngOnChanges(): void {
     if (this.canvasRef) {
       this.buildChart();
     }

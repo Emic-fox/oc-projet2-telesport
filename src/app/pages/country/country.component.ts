@@ -1,5 +1,5 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { BackLinkComponent } from '@components/back-link/back-link.component';
 import { StatCardComponent } from '@components/stat-card/stat-card.component';
@@ -20,17 +20,17 @@ import { Olympic } from '@models/Olympic';
   ]
 })
 export class CountryComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private http = inject(HttpClient);
+
   private olympicUrl = './assets/mock/olympic.json';
-  public titlePage: string = '';
+  public titlePage = '';
   public years: number[] = [];
   public medals: number[] = [];
-  public totalEntries: number = 0;
-  public totalMedals: number = 0;
-  public totalAthletes: number = 0;
+  public totalEntries = 0;
+  public totalMedals = 0;
+  public totalAthletes = 0;
   public error!: string;
-
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
-  }
 
   ngOnInit() {
     let countryName: string | null = null

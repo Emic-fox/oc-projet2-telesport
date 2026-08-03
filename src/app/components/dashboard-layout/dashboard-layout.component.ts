@@ -9,5 +9,5 @@ import { CardComponent } from '@components/card/card.component';
   styleUrl: './dashboard-layout.component.scss'
 })
 export class DashboardLayoutComponent {
-  @Input() titlePage: string = '';
+  @Input() titlePage = '';
 }
