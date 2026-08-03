@@ -39,7 +39,7 @@ describe('ChartComponent', () => {
     const destroySpy = spyOn(firstChart!, 'destroy').and.callThrough();
 
     component.data = [1, 2, 3];
-    component.ngOnChanges({});
+    component.ngOnChanges();
 
     expect(destroySpy).toHaveBeenCalled();
     expect(component['chart']).not.toBe(firstChart);
@@ -55,6 +55,7 @@ describe('ChartComponent', () => {
   });
 
   it('should emit pointClick when a point is clicked', () => {
+    component.type = 'pie';
     component.labels = ['2020', '2021'];
     component.data = [1, 2];
     fixture.detectChanges();

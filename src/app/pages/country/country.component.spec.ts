@@ -75,4 +75,31 @@ describe('CountryComponent', () => {
 
     expect(component.error).toBe('boom');
   });
+
+  it('should keep default stats when the country is not found', async () => {
+    TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({
+      imports: [CountryComponent],
+      providers: [
+        provideRouter([]),
+        { provide: DataService, useValue: dataServiceSpy },
+        {
+          provide: ActivatedRoute,
+          useValue: { paramMap: of(convertToParamMap({ countryName: 'Unknown' })) },
+        },
+      ],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(CountryComponent);
+    component = fixture.componentInstance;
+
+    fixture.detectChanges();
+
+    expect(component.titlePage).toBe('');
+    expect(component.totalEntries).toBe(0);
+    expect(component.years).toEqual([]);
+    expect(component.medals).toEqual([]);
+    expect(component.totalMedals).toBe(0);
+    expect(component.totalAthletes).toBe(0);
+  });
 });

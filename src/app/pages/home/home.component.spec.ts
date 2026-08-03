@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { Router, provideRouter } from '@angular/router';
 import { of, throwError } from 'rxjs';
 
 import { HomeComponent } from './home.component';
@@ -66,5 +66,15 @@ describe('HomeComponent', () => {
     fixture.detectChanges();
 
     expect(component.error).toBe('boom');
+  });
+
+  it('should navigate to the clicked country on chart point click', () => {
+    fixture.detectChanges();
+    const router = TestBed.inject(Router);
+    const navigateSpy = spyOn(router, 'navigate');
+
+    component.onChartPointClick({ index: 0, label: 'France' });
+
+    expect(navigateSpy).toHaveBeenCalledWith(['country', 'France']);
   });
 });

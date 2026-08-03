@@ -17,7 +17,7 @@ Ce fichier liste les points à améliorer sur ce projet avant l'ajout de nouvell
 | [x] | [`console.log` de débug oubliés](#console-log) | Sécurité | Haute |
 | [ ] | [Aucune gestion réelle des erreurs](#gestion-erreurs) | Structure | Haute |
 | [x] | [Absence de linter](#absence-linter) | Qualité | Moyenne |
-| [] | [Tests unitaires non implémentés](#tests-non-implementes) | Qualité | Moyenne |
+| [x] | [Tests unitaires non implémentés](#tests-non-implementes) | Qualité | Moyenne |
 | [x] | [URL en dur plutôt qu'en variable d'environnement](#url-en-dur) | Placement | Haute |
 | [x] | [Hiérarchie des titres incohérente](#uxui-titres) | UX/UI/A11y | Basse |
 | [x] | [Header non partagé entre les pages](#uxui-header) | UX/UI/A11y | Haute |
