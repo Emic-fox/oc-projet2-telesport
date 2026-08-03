@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { StatCardComponent } from '@components/stat-card/stat-card.component';
 import { DashboardLayoutComponent } from '@components/dashboard-layout/dashboard-layout.component';
 import { ChartComponent, ChartPointClickEvent } from '@components/chart/chart.component';
+import { Olympic } from '@models/Olympic';
 
 @Component({
   selector: 'app-home',
@@ -28,19 +29,17 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router, private http:HttpClient) { }
 
   ngOnInit() {
-    this.http.get<any[]>(this.olympicUrl).pipe().subscribe(
+    this.http.get<Olympic[]>(this.olympicUrl).pipe().subscribe(
       (data) => {
-        console.log(`Liste des données : ${JSON.stringify(data)}`);
         if (data && data.length > 0) {
-          this.totalJOs = Array.from(new Set(data.map((i: any) => i.participations.map((f: any) => f.year)).flat())).length;
-          this.countries = data.map((i: any) => i.country);
+          this.totalJOs = Array.from(new Set(data.map((o) => o.participations.map(f => f.year)).flat())).length;
+          this.countries = data.map(o => o.country);
           this.totalCountries = this.countries.length;
-          const medals = data.map((i: any) => i.participations.map((i: any) => (i.medalsCount)));
-          this.medalsPerCountry = medals.map((i) => i.reduce((acc: any, i: any) => acc + i, 0));
+          const medals = data.map(o => o.participations.map(p => p.medalsCount));
+          this.medalsPerCountry = medals.map(i => i.reduce((acc, j) => acc + j, 0));
         }
       },
       (error:HttpErrorResponse) => {
-        console.log(`erreur : ${error}`);
         this.error = error.message
       }
     )

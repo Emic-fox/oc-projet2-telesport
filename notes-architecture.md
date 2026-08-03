@@ -11,10 +11,10 @@ Ce fichier liste les points à améliorer sur ce projet avant l'ajout de nouvell
 | [ ] | [Injection par constructeur plutôt que `inject()`](#inject-function) | Structure | Basse |
 | [ ] | [Classes CSS utilitaires trop responsables](#css-responsabilites) | Structure | Moyenne |
 | [x] | [Manque de composants atomiques](#composants-atomiques) | Duplication | Haute |
-| [ ] | [Usage massif de `any`, absence de modèles](#typescript-any) | Typage | Haute |
+| [x] | [Usage massif de `any`, absence de modèles](#typescript-any) | Typage | Haute |
 | [ ] | [Absence de couche service](#absence-service) | Duplication | Haute |
 | [ ] | [Mauvaise utilisation de RxJS](#mauvaise-utilisation-rxjs) | Qualité | Basse |
-| [ ] | [`console.log` de débug oubliés](#console-log) | Sécurité | Haute |
+| [x] | [`console.log` de débug oubliés](#console-log) | Sécurité | Haute |
 | [ ] | [Aucune gestion réelle des erreurs](#gestion-erreurs) | Structure | Haute |
 | [ ] | [Absence de linter](#absence-linter) | Qualité | Moyenne |
 | [ ] | [Tests unitaires non implémentés](#tests-non-implementes) | Qualité | Moyenne |
