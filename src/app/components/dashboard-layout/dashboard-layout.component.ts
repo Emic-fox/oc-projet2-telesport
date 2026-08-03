@@ -6,7 +6,8 @@ import { CardComponent } from '@components/card/card.component';
   standalone: true,
   imports: [CardComponent],
   templateUrl: './dashboard-layout.component.html',
-  styleUrl: './dashboard-layout.component.scss'
+  styleUrl: './dashboard-layout.component.scss',
+  host: { class: 'p-2' }
 })
 export class DashboardLayoutComponent {
   @Input() titlePage = '';

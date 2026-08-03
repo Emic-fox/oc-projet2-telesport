@@ -4,14 +4,11 @@
   --color-text-muted: gray;
 }
 
-.heading {
-    flex-direction: column;
-}
-
-.center {
-    display: flex;
-    justify-content: center;
-    margin: 5px;
+body {
+  margin: 0;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 // ---------------- Classes utilitaires ----------------
@@ -22,6 +19,22 @@
 
 .justify-center {
     justify-content: center;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.h-full {
+    height: 100%;
+}
+
+.flex-grow-1 {
+    flex-grow: 1;
 }
 
 // Échelle en pas de 5px (à 16px de taille de police racine), pour préserver l'espacement existant.
@@ -40,6 +53,10 @@ $spacers: (
 
     .gap-#{$key} {
         gap: $value;
+    }
+
+    .p-#{$key} {
+        padding: $value;
     }
 }
 

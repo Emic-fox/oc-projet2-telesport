@@ -8,6 +8,7 @@ import { HeaderComponent } from './components/header/header.component';
     styleUrls: ['./app.component.scss'],
     standalone: true,
     imports: [RouterOutlet, HeaderComponent],
+    host: { class: 'd-flex flex-column h-full' },
 })
 export class AppComponent {
 

@@ -22,6 +22,7 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() datasetLabel = '';
   @Input() backgroundColor: string | string[] = 'var(--color-primary)';
   @Input() aspectRatio = 2.5;
+  @Input() xAxisLabel?: string;
   @Output() pointClick = new EventEmitter<ChartPointClickEvent>();
 
   @ViewChild('canvas', { static: true })
@@ -116,6 +117,14 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
       },
       options: {
         aspectRatio: this.aspectRatio,
+        scales: {
+          x: {
+            title: {
+              display: !!this.xAxisLabel,
+              text: this.xAxisLabel,
+            },
+          },
+        },
       },
     });
   }
