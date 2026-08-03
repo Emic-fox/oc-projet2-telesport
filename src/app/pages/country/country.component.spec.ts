@@ -76,7 +76,7 @@ describe('CountryComponent', () => {
     expect(component.error).toBe('boom');
   });
 
-  it('should keep default stats when the country is not found', async () => {
+  it('should flag the country as not found instead of keeping default stats', async () => {
     TestBed.resetTestingModule();
     await TestBed.configureTestingModule({
       imports: [CountryComponent],
@@ -95,7 +95,8 @@ describe('CountryComponent', () => {
 
     fixture.detectChanges();
 
-    expect(component.titlePage).toBe('');
+    expect(component.notFound).toBe(true);
+    expect(component.titlePage).toBe('Unknown');
     expect(component.totalEntries).toBe(0);
     expect(component.years).toEqual([]);
     expect(component.medals).toEqual([]);

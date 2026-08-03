@@ -20,7 +20,7 @@ export class DataService {
         return throwError(
           () =>
             new OlympicDataError(
-              'Impossible de récupérer les données olympiques.',
+              'Unable to fetch Olympic data. Please try again later.',
               error,
             ),
         );

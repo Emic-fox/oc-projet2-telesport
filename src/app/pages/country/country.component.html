@@ -1,18 +1,26 @@
 <app-dashboard-layout [titlePage]="titlePage">
-  <ng-container stat-cards>
-    <app-stat-card [title]="'Number of entries'" [value]="totalEntries" />
-    <app-stat-card [title]="'Total Number of medals'" [value]="totalMedals" />
-    <app-stat-card [title]="'Total Number of athletes'" [value]="totalAthletes" />
-  </ng-container>
-  <div class="chart-container wrapper-container">
-    <div class="container">
-      <app-chart
-        [type]="'line'"
-        [labels]="years"
-        [data]="medals"
-        [datasetLabel]="'medals'"
-        [xAxisLabel]="'Date'"
-      />
+  @if (!error && !notFound) {
+    <ng-container stat-cards>
+      <app-stat-card [title]="'Number of entries'" [value]="totalEntries" />
+      <app-stat-card [title]="'Total Number of medals'" [value]="totalMedals" />
+      <app-stat-card [title]="'Total Number of athletes'" [value]="totalAthletes" />
+    </ng-container>
+  }
+  <div class="d-flex justify-center m-3">
+    <div class="w-50">
+      @if (error) {
+        <app-error-message [message]="error" />
+      } @else if (notFound) {
+        <app-error-message [message]="'Unknown country.'" />
+      } @else {
+        <app-chart
+          [type]="'line'"
+          [labels]="years"
+          [data]="medals"
+          [datasetLabel]="'medals'"
+          [xAxisLabel]="'Date'"
+        />
+      }
     </div>
   </div>
   <div class="d-flex justify-center m-1">

@@ -15,7 +15,7 @@ Ce fichier liste les points à améliorer sur ce projet avant l'ajout de nouvell
 | [x] | [Absence de couche service](#absence-service) | Duplication | Haute |
 | [x] | [Mauvaise utilisation de RxJS](#mauvaise-utilisation-rxjs) | Qualité | Basse |
 | [x] | [`console.log` de débug oubliés](#console-log) | Sécurité | Haute |
-| [ ] | [Aucune gestion réelle des erreurs](#gestion-erreurs) | Structure | Haute |
+| [x] | [Aucune gestion réelle des erreurs](#gestion-erreurs) | Structure | Haute |
 | [x] | [Absence de linter](#absence-linter) | Qualité | Moyenne |
 | [x] | [Tests unitaires non implémentés](#tests-non-implementes) | Qualité | Moyenne |
 | [x] | [URL en dur plutôt qu'en variable d'environnement](#url-en-dur) | Placement | Haute |

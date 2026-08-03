@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { StatCardComponent } from '@components/stat-card/stat-card.component';
 import { DashboardLayoutComponent } from '@components/dashboard-layout/dashboard-layout.component';
 import { ChartComponent, ChartPointClickEvent } from '@components/chart/chart.component';
+import { ErrorMessageComponent } from '@components/error-message/error-message.component';
 import { DataService } from '@services/data.service';
 import { OlympicDataError } from '@app/models/Errors';
 
@@ -16,6 +17,7 @@ import { OlympicDataError } from '@app/models/Errors';
     StatCardComponent,
     DashboardLayoutComponent,
     ChartComponent,
+    ErrorMessageComponent,
   ],
 })
 export class HomeComponent implements OnInit {
