@@ -11,7 +11,6 @@ import { OlympicDataError } from '@app/models/Errors';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
   standalone: true,
   imports: [
     StatCardComponent,

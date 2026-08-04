@@ -1,9 +1,9 @@
-<div class="d-flex justify-center m-1">
+<div class="d-flex justify-center">
   <app-card [filled]="true">
-    {{ titlePage }}
+    <h2 class="m-0">{{ titlePage }}</h2>
   </app-card>
 </div>
-<div class="d-flex justify-center gap-4 m-1">
+<div class="d-flex flex-wrap justify-center gap-4 mt-2">
   <ng-content select="[stat-cards]" />
 </div>
 <ng-content />

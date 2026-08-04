@@ -15,59 +15,83 @@ body {
 // ---------------- Classes utilitaires ----------------
 
 .d-flex {
-    display: flex;
+  display: flex;
 }
 
 .justify-center {
-    justify-content: center;
+  justify-content: center;
 }
 
 .align-items-center {
-    align-items: center;
+  align-items: center;
 }
 
 .flex-column {
-    flex-direction: column;
-}
-
-.h-full {
-    height: 100%;
+  flex-direction: column;
 }
 
 .flex-grow-1 {
-    flex-grow: 1;
+  flex-grow: 1;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.h-full {
+  height: 100%;
 }
 
 // Échelle en pas de 5px (à 16px de taille de police racine), pour préserver l'espacement existant.
 $spacers: (
-    1: 0.3125rem,
-    2: 0.625rem,
-    3: 0.9375rem,
-    4: 1.25rem,
-    5: 1.5625rem,
+  0: 0,
+  1: 0.3125rem,
+  2: 0.625rem,
+  3: 0.9375rem,
+  4: 1.25rem,
+  5: 1.5625rem,
+);
+
+$directions: (
+  t: top,
+  b: bottom,
+  l: left,
+  r: right,
 );
 
 @each $key, $value in $spacers {
-    .m-#{$key} {
-        margin: $value;
-    }
+  .m-#{$key} {
+    margin: $value;
+  }
 
-    .gap-#{$key} {
-        gap: $value;
+  @each $dir, $dir-name in $directions {
+    .m#{$dir}-#{$key} {
+      margin-#{$dir-name}: $value;
     }
+  }
 
-    .p-#{$key} {
-        padding: $value;
+  .p-#{$key} {
+    padding: $value;
+  }
+
+  @each $dir, $dir-name in $directions {
+    .p#{$dir}-#{$key} {
+      padding-#{$dir-name}: $value;
     }
+  }
+
+  .gap-#{$key} {
+    gap: $value;
+  }
 }
 
 .w-50 {
-    width: 50%;
+  width: 50%;
 }
 
 @media screen and (max-width: 1000px) {
-    .w-50 {
-        width: 100%;
-    }
+  .w-50 {
+    width: 100%;
+  }
 }
 
