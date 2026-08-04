@@ -28,7 +28,7 @@ describe('ChartComponent', () => {
   });
 
   it('should build a pie chart when type is pie', () => {
-    component.type = 'pie';
+    component.config = { type: 'pie', labels: [], datasets: [] };
     fixture.detectChanges();
     expect((component['chart']?.config as ChartConfiguration).type).toBe('pie');
   });
@@ -38,7 +38,7 @@ describe('ChartComponent', () => {
     const firstChart = component['chart'];
     const destroySpy = spyOn(firstChart!, 'destroy').and.callThrough();
 
-    component.data = [1, 2, 3];
+    component.config = { type: 'line', labels: [], datasets: [{ label: 'series', data: [1, 2, 3] }] };
     component.ngOnChanges();
 
     expect(destroySpy).toHaveBeenCalled();
@@ -55,9 +55,11 @@ describe('ChartComponent', () => {
   });
 
   it('should emit pointClick when a point is clicked', () => {
-    component.type = 'pie';
-    component.labels = ['2020', '2021'];
-    component.data = [1, 2];
+    component.config = {
+      type: 'pie',
+      labels: ['2020', '2021'],
+      datasets: [{ label: 'series', data: [1, 2] }],
+    };
     fixture.detectChanges();
 
     const chart = component['chart']!;

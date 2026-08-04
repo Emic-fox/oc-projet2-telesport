@@ -51,13 +51,32 @@ describe('HomeComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should start in a loading state until the data resolves', () => {
+    expect(component.loading).toBe(true);
+
+    fixture.detectChanges();
+
+    expect(component.loading).toBe(false);
+  });
+
   it('should load olympics data and compute stats on init', () => {
     fixture.detectChanges();
 
-    expect(component.countries).toEqual(['France', 'Germany']);
     expect(component.totalCountries).toBe(2);
     expect(component.totalJOs).toBe(2);
-    expect(component.medalsPerCountry).toEqual([8, 2]);
+    expect(component.chartConfig).toEqual({
+      type: 'pie',
+      labels: ['France', 'Germany'],
+      datasets: [
+        {
+          label: 'Medals',
+          data: [8, 2],
+          backgroundColor: ['#0b868f', '#adc3de', '#7a3c53', '#8f6263', 'orange', '#94819d'],
+        },
+      ],
+      xAxisLabel: undefined,
+      aspectRatio: undefined,
+    });
   });
 
   it('should set an error message when the data service fails', () => {
@@ -66,6 +85,9 @@ describe('HomeComponent', () => {
     fixture.detectChanges();
 
     expect(component.error).toBe('boom');
+    // le loader ne se ré-affiche pas car le template teste error avant loading,
+    // mais le flag interne reste à true (loading = false n'est jamais atteint côté erreur).
+    expect(component.loading).toBe(true);
   });
 
   it('should navigate to the clicked country on chart point click', () => {

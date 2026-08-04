@@ -57,13 +57,29 @@ describe('CountryComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should start in a loading state until the data resolves', () => {
+    expect(component.loading).toBe(true);
+
+    fixture.detectChanges();
+
+    expect(component.loading).toBe(false);
+  });
+
   it('should load the stats of the country from the route param', () => {
     fixture.detectChanges();
 
     expect(component.titlePage).toBe('France');
     expect(component.totalEntries).toBe(2);
-    expect(component.years).toEqual([2012, 2016]);
-    expect(component.medals).toEqual([3, 5]);
+    expect(component.chartConfig).toEqual({
+      type: 'line',
+      labels: ['2012', '2016'],
+      datasets: [
+        { label: 'Medals', data: [3, 5], backgroundColor: 'var(--color-primary)' },
+        { label: 'Athletes', data: [12, 15], backgroundColor: '#adc3de' },
+      ],
+      xAxisLabel: 'Date',
+      aspectRatio: undefined,
+    });
     expect(component.totalMedals).toBe(8);
     expect(component.totalAthletes).toBe(27);
   });
@@ -74,6 +90,7 @@ describe('CountryComponent', () => {
     fixture.detectChanges();
 
     expect(component.error).toBe('boom');
+    expect(component.loading).toBe(true);
   });
 
   it('should flag the country as not found instead of keeping default stats', async () => {
@@ -98,9 +115,11 @@ describe('CountryComponent', () => {
     expect(component.notFound).toBe(true);
     expect(component.titlePage).toBe('Unknown');
     expect(component.totalEntries).toBe(0);
-    expect(component.years).toEqual([]);
-    expect(component.medals).toEqual([]);
+    expect(component.chartConfig).toBeUndefined();
     expect(component.totalMedals).toBe(0);
     expect(component.totalAthletes).toBe(0);
+    // notFound court-circuite avant le passage à loading = false : le loader ne se ré-affiche pas
+    // car le template teste notFound avant loading, mais le flag interne reste à true.
+    expect(component.loading).toBe(true);
   });
 });

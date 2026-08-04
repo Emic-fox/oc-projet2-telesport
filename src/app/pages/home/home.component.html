@@ -9,15 +9,10 @@
     <div class="w-50">
       @if (error) {
         <app-error-message [message]="error" />
+      } @else if (loading) {
+        <app-loader />
       } @else {
-        <app-chart
-          [type]="'pie'"
-          [labels]="countries"
-          [data]="medalsPerCountry"
-          [datasetLabel]="'Medals'"
-          [backgroundColor]="['#0b868f', '#adc3de', '#7a3c53', '#8f6263', 'orange', '#94819d']"
-          (pointClick)="onChartPointClick($event)"
-        />
+        <app-chart [config]="chartConfig" (pointClick)="onChartPointClick($event)" />
       }
     </div>
   </div>

@@ -12,14 +12,10 @@
         <app-error-message [message]="error" />
       } @else if (notFound) {
         <app-error-message [message]="'Unknown country.'" />
+      } @else if (loading) {
+        <app-loader />
       } @else {
-        <app-chart
-          [type]="'line'"
-          [labels]="years"
-          [data]="medals"
-          [datasetLabel]="'medals'"
-          [xAxisLabel]="'Date'"
-        />
+        <app-chart [config]="chartConfig" />
       }
     </div>
   </div>

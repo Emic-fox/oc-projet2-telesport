@@ -4,8 +4,10 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { BackLinkComponent } from '@components/back-link/back-link.component';
 import { StatCardComponent } from '@components/stat-card/stat-card.component';
 import { DashboardLayoutComponent } from '@components/dashboard-layout/dashboard-layout.component';
-import { ChartComponent } from '@components/chart/chart.component';
+import { ChartComponent, ChartConfig } from '@components/chart/chart.component';
+import { ChartConfigBuilder } from '@components/chart/chart-config.builder';
 import { ErrorMessageComponent } from '@components/error-message/error-message.component';
+import { LoaderComponent } from "@components/loader/loader.component";
 import { DataService } from '@services/data.service';
 import { OlympicDataError } from '@app/models/Errors';
 
@@ -19,7 +21,8 @@ import { OlympicDataError } from '@app/models/Errors';
     DashboardLayoutComponent,
     ChartComponent,
     ErrorMessageComponent,
-  ]
+    LoaderComponent
+]
 })
 export class CountryComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -27,13 +30,13 @@ export class CountryComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
 
   public titlePage = '';
-  public years: number[] = [];
-  public medals: number[] = [];
+  public chartConfig!: ChartConfig;
   public totalEntries = 0;
   public totalMedals = 0;
   public totalAthletes = 0;
   public error!: string;
   public notFound = false;
+  public loading = true;
 
   ngOnInit() {
     let countryName: string | null = null
@@ -51,12 +54,24 @@ export class CountryComponent implements OnInit {
               this.notFound = true;
               return;
             }
+
             this.totalEntries = selectedCountry.participations.length;
-            this.years = selectedCountry.participations.map(p => p.year);
-            this.medals = selectedCountry.participations.map(p => p.medalsCount);
-            this.totalMedals = this.medals.reduce((acc, i) => acc + i, 0);
-            const nbAthletes = selectedCountry.participations.map(p => p.athleteCount);
-            this.totalAthletes = nbAthletes.reduce((acc, i) => acc + i, 0);
+            this.totalMedals = selectedCountry.participations.reduce((acc, p) => acc + p.medalsCount, 0);
+            this.totalAthletes = selectedCountry.participations.reduce((acc, p) => acc + p.athleteCount, 0);
+
+            this.chartConfig = new ChartConfigBuilder('line')
+              .addSerie(
+                'Medals',
+                Object.fromEntries(selectedCountry.participations.map((p) => [p.year, p.medalsCount])),
+              )
+              .addSerie(
+                'Athletes',
+                Object.fromEntries(selectedCountry.participations.map((p) => [p.year, p.athleteCount])),
+              )
+              .setXAxisLabel('Date')
+              .build();
+
+            this.loading = false;
           }
         },
         error: (error: OlympicDataError) => {

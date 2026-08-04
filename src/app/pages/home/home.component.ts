@@ -3,8 +3,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { StatCardComponent } from '@components/stat-card/stat-card.component';
 import { DashboardLayoutComponent } from '@components/dashboard-layout/dashboard-layout.component';
-import { ChartComponent, ChartPointClickEvent } from '@components/chart/chart.component';
+import { ChartComponent, ChartConfig, ChartPointClickEvent } from '@components/chart/chart.component';
+import { ChartConfigBuilder } from '@components/chart/chart-config.builder';
 import { ErrorMessageComponent } from '@components/error-message/error-message.component';
+import { LoaderComponent } from '@components/loader/loader.component';
 import { DataService } from '@services/data.service';
 import { OlympicDataError } from '@app/models/Errors';
 
@@ -17,6 +19,7 @@ import { OlympicDataError } from '@app/models/Errors';
     DashboardLayoutComponent,
     ChartComponent,
     ErrorMessageComponent,
+    LoaderComponent
   ],
 })
 export class HomeComponent implements OnInit {
@@ -24,12 +27,12 @@ export class HomeComponent implements OnInit {
   private dataService = inject(DataService);
   private destroyRef = inject(DestroyRef);
 
-  public countries: string[] = [];
-  public medalsPerCountry: number[] = [];
+  public titlePage = "Medals per Country";
+  public chartConfig!: ChartConfig;
   public totalCountries = 0
   public totalJOs = 0
-  public error!:string
-  public titlePage = "Medals per Country";
+  public error!: string
+  public loading = true
 
   ngOnInit() {
     this.dataService
@@ -38,10 +41,15 @@ export class HomeComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.totalJOs = Array.from(new Set(data.map((o) => o.participations.map(f => f.year)).flat())).length;
-          this.countries = data.map(o => o.country);
-          this.totalCountries = this.countries.length;
-          const medals = data.map(o => o.participations.map(p => p.medalsCount));
-          this.medalsPerCountry = medals.map(i => i.reduce((acc, j) => acc + j, 0));
+          this.totalCountries = data.length;
+
+          this.chartConfig = new ChartConfigBuilder('pie')
+            .addSerie('Medals', Object.fromEntries(
+              data.map(o => [o.country, o.participations.reduce((acc, p) => acc + p.medalsCount, 0)]),
+            ))
+            .build();
+
+          this.loading = false;
         },
         error: (error: OlympicDataError) => {
           this.error = error.message;

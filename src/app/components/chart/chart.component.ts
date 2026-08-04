@@ -6,8 +6,25 @@ export interface ChartPointClickEvent {
   label: string;
 }
 
-type DataValue = number;
-type DataLabel = string | number;
+export type DataValue = number;
+export type DataLabel = string | number;
+export type ChartType = 'pie' | 'line';
+
+export interface ChartDatasetInput {
+  label: string;
+  data: DataValue[];
+  backgroundColor?: string | string[];
+}
+
+export interface ChartConfig {
+  type: ChartType;
+  labels: DataLabel[];
+  datasets: ChartDatasetInput[];
+  xAxisLabel?: string;
+  aspectRatio?: number;
+}
+
+const DEFAULT_ASPECT_RATIO = 2.5;
 
 @Component({
   selector: 'app-chart',
@@ -16,19 +33,13 @@ type DataLabel = string | number;
   template: `<canvas #canvas></canvas>`,
 })
 export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
-  @Input() type: 'pie' | 'line' = 'line';
-  @Input() labels: DataLabel[] = [];
-  @Input() data: DataValue[] = [];
-  @Input() datasetLabel = '';
-  @Input() backgroundColor: string | string[] = 'var(--color-primary)';
-  @Input() aspectRatio = 2.5;
-  @Input() xAxisLabel?: string;
+  @Input() config: ChartConfig = { type: 'line', labels: [], datasets: [] };
   @Output() pointClick = new EventEmitter<ChartPointClickEvent>();
 
   @ViewChild('canvas', { static: true })
   canvasRef!: ElementRef<HTMLCanvasElement>;
 
-  private chart?: Chart<'pie' | 'line', DataValue[], DataLabel>;
+  private chart?: Chart<ChartType, DataValue[], DataLabel>;
 
   ngOnChanges(): void {
     if (this.canvasRef) {
@@ -47,7 +58,7 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
   private buildChart(): void {
     this.chart?.destroy();
     this.chart =
-      this.type === 'pie' ? this.buildPieChart() : this.buildLineChart();
+      this.config.type === 'pie' ? this.buildPieChart() : this.buildLineChart();
   }
 
   /** Chart.js dessine sur un canvas et ne peut pas résoudre les var() CSS lui-même, donc on convertit manuellement. */
@@ -68,18 +79,16 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
     const chart = new Chart(this.canvasRef.nativeElement, {
       type: 'pie',
       data: {
-        labels: this.labels,
-        datasets: [
-          {
-            label: this.datasetLabel,
-            data: this.data,
-            backgroundColor: this.resolveColor(this.backgroundColor),
-            hoverOffset: 4,
-          },
-        ],
+        labels: this.config.labels,
+        datasets: this.config.datasets.map((dataset) => ({
+          label: dataset.label,
+          data: dataset.data,
+          backgroundColor: this.resolveColor(dataset.backgroundColor ?? 'var(--color-primary)'),
+          hoverOffset: 4,
+        })),
       },
       options: {
-        aspectRatio: this.aspectRatio,
+        aspectRatio: this.config.aspectRatio ?? DEFAULT_ASPECT_RATIO,
         onClick: (e) => {
           if (e.native) {
             const points = chart.getElementsAtEventForMode(
@@ -106,22 +115,20 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
     return new Chart(this.canvasRef.nativeElement, {
       type: 'line',
       data: {
-        labels: this.labels,
-        datasets: [
-          {
-            label: this.datasetLabel,
-            data: this.data,
-            backgroundColor: this.resolveColor(this.backgroundColor),
-          },
-        ],
+        labels: this.config.labels,
+        datasets: this.config.datasets.map((dataset) => ({
+          label: dataset.label,
+          data: dataset.data,
+          backgroundColor: this.resolveColor(dataset.backgroundColor ?? 'var(--color-primary)'),
+        })),
       },
       options: {
-        aspectRatio: this.aspectRatio,
+        aspectRatio: this.config.aspectRatio ?? DEFAULT_ASPECT_RATIO,
         scales: {
           x: {
             title: {
-              display: !!this.xAxisLabel,
-              text: this.xAxisLabel,
+              display: !!this.config.xAxisLabel,
+              text: this.config.xAxisLabel,
             },
           },
         },
