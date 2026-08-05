@@ -40,6 +40,12 @@ export class HomeComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (data) => {
+          if (!data || data.length === 0) {
+            this.error = 'No data available';
+            this.loading = false;
+            return;
+          }
+
           this.totalJOs = Array.from(new Set(data.map((o) => o.participations.map(f => f.year)).flat())).length;
           this.totalCountries = data.length;
 
